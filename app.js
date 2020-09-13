@@ -34,9 +34,8 @@ function play() {
 function tick() {
   document.getElementById("submitbtn").disabled = true;
 
-  if (countdown_second < 0) {
+  if (countdown_second <= 0) {
     clearInterval(countdown_second = 0);
-    clearInterval(countdown);
     document.getElementById("pausebtn").disabled = true;
     document.getElementById("stopbtn").disabled = true;
     document.getElementById("playbtn").disabled = false;
@@ -47,7 +46,6 @@ function tick() {
   }
   roundtimer.textContent = "Round " + roundtotal_temp;
   timer.textContent = countdown_second > resttime ? countdown_second - resttime - 1 : countdown_second;
-
   if (countdown_second > resttime) {
     activity.textContent = "Workout";
     activity.style.color = "black";
@@ -123,10 +121,12 @@ function submit() {
 
   if (checkInput(round, workoutminutes, workoutseconds, restminutes, restseconds)) {
     showWorkoutInfo(round, workouttime, resttime);
-    start();    
+    start(round);
+    console.log(round);    
   }
 }
-function start(){
+
+function start(round){
   document.getElementById("playbtn").disabled = false;
   workouttotal = workouttime + resttime;
   roundtotal = round;
@@ -140,6 +140,7 @@ function start(){
   timer.style.color = "black";
   roundtimer.style.color = "black";
 }
+
 function checkInput(round, workoutminutes, workoutseconds, restminutes, restseconds) {
   if (workoutminutes < 0 || workoutseconds < 0 || restminutes < 0 || restseconds < 0) {
     document.getElementById('empty-text').textContent = "Input can't be below zero.";
